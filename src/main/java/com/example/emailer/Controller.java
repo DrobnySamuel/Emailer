@@ -24,8 +24,8 @@ public class Controller {
 
     // GET only important emails
     @GetMapping("/important")
-    public List<Email> getImportant() {
-        return repo.findByImportance("high");
+    public List<Email> getImportant(@RequestParam(defaultValue = "10") int importance) {
+        return repo.findByImportance(importance);
     }
 
     // POST new email
