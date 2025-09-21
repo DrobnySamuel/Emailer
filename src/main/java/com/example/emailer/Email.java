@@ -25,17 +25,17 @@ public class Email {
     private int importance; // 0 - 10
     private String reason;
 
+
     private boolean seen;
 
-
-    public Email(Long id, String subject, LocalDateTime delivered, String sender, String body, int importance, String reason) {
+    public Email(Long id, String subject, LocalDateTime delivered, String sender, String body) {
         this.id = id;
         this.subject = subject;
         this.delivered = delivered;
         this.sender = sender;
         this.body = body;
-        this.importance = importance;
-        this.reason = reason;
+        this.importance = -1;
+        this.reason = "";
         this.seen = false;
     }
 
@@ -66,4 +66,12 @@ public class Email {
 
     public String getReason() { return reason; }
     public void setReason(String reason) { this.reason = reason; }
+
+    public boolean isSeen() {
+        return seen;
+    }
+
+    public void setSeen(boolean seen) {
+        this.seen = seen;
+    }
 }

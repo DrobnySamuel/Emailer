@@ -2,6 +2,7 @@ package com.example.emailer;
 
 import com.example.emailer.Email;
 import com.example.emailer.EmailRepo;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 public class Controller {
 
     private final EmailRepo repo;
+    private final AiService aiService;
 
-    public Controller(EmailRepo repo) {
+    public Controller(EmailRepo repo, AiService aiService) {
         this.repo = repo;
+        this.aiService = aiService;
     }
 
     // GET all emails
@@ -32,5 +35,23 @@ public class Controller {
     @PostMapping
     public Email addEmail(@RequestBody Email email) {
         return repo.save(email);
+    }
+
+    @PutMapping("/{id}/seen")
+    public Email markAsSeen(@PathVariable Long id) {
+        Email email = repo.findById(id).orElseThrow();
+        email.setSeen(true);
+        return repo.save(email);
+    }
+
+    @GetMapping("/emails/assign-importance")
+    public List<Email> assignImportance() {
+        List<Email> emails = repo.findByImportance(-1);
+        for (Email email : emails) {
+            int importance = aiService.determineImportance(email);
+            email.setImportance(importance);
+            repo.save(email);
+        }
+        return emails;
     }
 }

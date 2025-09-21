@@ -42,15 +42,27 @@ function App() {
                 <ul style={{ listStyle: "none", padding: 0 }}>
                     {emails.map((email) => (
                         <li
-                            key={email.id}
-                            onClick={() => setSelectedEmail(email)}
+                            key = {email.id}
+                            onClick={() => {
+                                fetch(`http://localhost:8080/emails/${email.id}/seen`, { method: "PUT" })
+                                    .then(res => res.json())
+                                    .then(updated => {
+                                        // update state with new email data
+                                        setEmails(emails.map(e => e.id === updated.id ? updated : e));
+                                        setSelectedEmail(updated);
+                                    });
+                            }}
                             style={{
                                 marginBottom: "15px",
                                 padding: "10px",
                                 borderBottom: "1px solid #eee",
                                 cursor: "pointer",
                                 backgroundColor:
-                                    selectedEmail?.id === email.id ? "#e6f0ff" : "transparent",
+                                    selectedEmail?.id === email.id
+                                        ? "#e6f0ff" // selected
+                                        : email.seen
+                                            ? "rgba(241,241,241,0.95)" // seen
+                                            : "transparent", // unseen
                             }}
                         >
                             <strong>{email.subject}</strong> <br />
