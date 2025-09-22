@@ -1,7 +1,7 @@
 # Emailer App  
 
 A simple email client demo built with **Spring Boot (Java)** and **React**.  
-It highlights important delivered emails with the help of **AI (OpenAI API)** to automatically assign importance scores to new emails. But don't expect miracles :(  
+It highlights important delivered emails with the help of **AI (OpenAI API)** to automatically assign importance scores to new emails. Possible better highlighting may be pop-up with something like "don't miss these", or user's ability to set gis own importance for each contact, so AI can determine easier  
 
 ---
 
