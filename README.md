@@ -29,5 +29,7 @@ It highlights important delivered emails with the help of **AI (OpenAI API)** to
 ```
 ### Frontend
 cd frontend
+
 npm install
+
 npm start
